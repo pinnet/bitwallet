@@ -2,15 +2,16 @@
 
 import signal
 import buttonshim
-import inkyphat
 import subprocess
 import time
+import os
 from PIL import Image
 
 from sys import version_info
 
 DEVICE = "PCM"
 VOL_REPEAT = 0.2
+
 
 print("""
 Button SHIM: volume.py
@@ -28,6 +29,8 @@ Press Ctrl+C to exit.
 """)
 
 volume = 0
+
+os.system("python login-display.py")
 
 def set(action):
     subprocess.Popen(["amixer","set",DEVICE,action],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
@@ -51,9 +54,6 @@ def get_volume():
 def button_a(button, pressed):
     global volume
 
-    inkyphat.set_image(Image.open("InkyPhat-212x104.png"))
-
-    inkyphat.show()
     print("Status: Unmute")
     set("unmute")
 
@@ -103,18 +103,19 @@ def button_d(button, pressed):
     buttonshim.set_pixel(int(0xff * (1.0 - scale)), int(0xff * scale), 0x00)
 
 # Soft Power Off?
-@buttonshim.on_press(buttonshim.BUTTON_E)
-def button_e_press(button, pressed):
-    buttonshim.set_pixel(0xff, 0x00, 0x00)
+#@buttonshim.on_press(buttonshim.BUTTON_E)
 
-@buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=2)
-def button_e(button):
-    print("Held for 2sec!")
-    time.sleep(0.1)
-    for x in range(3):
-        buttonshim.set_pixel(0xff, 0x00, 0x00)
-        time.sleep(0.1)
-        buttonshim.set_pixel(0x00, 0x00, 0x00)
-        time.sleep(0.1)
+#def button_e_press(button, pressed):
 
-signal.pause()
+
+#@buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=2)
+#def button_e(button):
+#    print("Held for 2sec!")
+#    time.sleep(0.1)
+#    for x in range(3):
+#        buttonshim.set_pixel(0xff, 0x00, 0x00)
+#        time.sleep(0.1)
+#        buttonshim.set_pixel(0x00, 0x00, 0x00)
+#        time.sleep(0.1)
+
+#signal.pause()
